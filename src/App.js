@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Dog from './Dog/Dog';
 import Favorites from './Favorites/Favorites';
 import Search from './Search/Search';
-import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
+import Description from './Description/Description'
+import { Router, Route, Link, IndexRoute, browserHistory} from 'react-router'
 import axios from 'axios';
-import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
+import { Button, Grid, Row, Col, Image, Navbar, NavItem, Nav } from 'react-bootstrap';
 import './App.css';
 
 const NotFound = () => <div>Not found</div>
@@ -16,7 +17,9 @@ class Main extends Component {
     this.state = {
       list: [],
       oneDog: [],
-      searchTerm: null
+      descriptionDog: [],
+      searchTerm: null,
+      favorites: []
     }
 
     this.fetchDogs = this.fetchDogs.bind(this)
@@ -25,9 +28,9 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.cloneElement = this.cloneElement.bind(this);
     this.singleDogDisplay = this.singleDogDisplay.bind(this);
-    // this.handleSelect = this.handleSelect.bind(this);
-    // this.getInitialState = this.getInitialState.bind(this);
-
+    this.pics = this.pics.bind(this);
+    this.addToFavorites = this.addToFavorites.bind(this);
+    this.deleteFromFavorites = this.deleteFromFavorites.bind(this);
   }
 
 onSearchTermChange(event){
@@ -69,10 +72,14 @@ fetchDogs(){
         fetchDogs: this.fetchDogs,
         list: this.state.list,
         oneDog: this.state.oneDog,
+        descriptionDog: this.state.descriptionDog,
+        favorites: this.state.favorites,
         handleSubmit: this.handleSubmit,
         onSearchTermChange: this.onSearchTermChange,
         truncateString: this.truncateString,
-        singleDogDisplay: this.singleDogDisplay
+        singleDogDisplay: this.singleDogDisplay,
+        addToFavorites: this.addToFavorites,
+        deleteFromFavorites: this.deleteFromFavorites
       })
     }
   }
@@ -81,62 +88,43 @@ fetchDogs(){
     let photoArray = [];
 
     for (const element of photos) {
-      // console.log(element["@size"]);
       if (element["@size"] === 'x') {
         photoArray.push(element["$t"])
-        // console.log(photoArray);
       }
     }
-
-    console.log(photos);
-
     this.state.oneDog.push(id, name, sex, photoArray, description)
-    console.log(this.state.oneDog);
-
+    this.state.descriptionDog.push(id, name, sex, ...photoArray, description)
   }
 
-  // Carousel
-  // getInitialState() {
-  //   return {
-  //     index: 0,
-  //     direction: null
-  //   };
-  // }
-  //
-  // handleSelect(selectedIndex, e) {
-  //   alert('selected=' + selectedIndex + ', direction=' + e.direction);
-  //   this.setState({
-  //     index: selectedIndex,
-  //     direction: e.direction
-  //   });
-  // }
-  // *********
+addToFavorites(id){
+
+}
+
+deleteFromFavorites(id){
+
+}
 
   render() {
-    return <div>NAVIGATE ME
-      <div>
-        {/* <Link to="dog">Dog  </Link> */}
-        <Link to="favorites"> -- Favorites --  </Link>
-        <Link to="search"> Search   </Link>
-        {this.cloneElement()}
+    return <div>
+      <Navbar>
+    <Navbar.Header>
+      <Navbar.Brand>
+        <a href="#">Find Me An Old Dog</a>
+      </Navbar.Brand>
+    </Navbar.Header>
+    <Nav>
+      <NavItem eventKey={1} href="#"><Link className="navi" to="favorites">favorite dogs</Link></NavItem>
+      <NavItem eventKey={2} href="#"><Link className="navi" to="search">search</Link></NavItem>
 
-      </div>
+    </Nav>
+  </Navbar>
+
+      {this.cloneElement()}
     </div>
   }
 }
 
-// const Main = (props) =>
-//   <div>NAVIGATE ME
-//     <div>
-//     <Link to="dog">Dog  </Link>
-//     <Link to="favorites"> -- Favorites --  </Link>
-//     <Link to="search"> Search   </Link>
-//     {props.children}
-//   </div>
-//   </div>
-
 export default class App extends Component {
-// class App extends Component {
 
   render() {
     return (
@@ -147,39 +135,12 @@ export default class App extends Component {
           <Route path='favorites' component={Favorites} />
           <Route path='search' component={Search}/>
           <Route path='dog' component={Dog} />
+          <Route path='description' component={Description} />
+
         </Route>
         <Route path='*' component={NotFound} />
       </Router>
-        {/* <Grid className>
-          <Row>
-            <Col>
-        <form onSubmit={this.handleSubmit}>
-        <input type="text" onChange={this.onSearchTermChange}/>
-        <input type="submit" value="Search" />
-      </form>
-    </Col>
-  </Row>
-      <div>
-        <Row >
-      {
-        this.state.list.map(ele => (
-          <Col s={12} md={4} l={3}>
-
-            <Link to='#' className="hvr-grow">
-            <h2>{ ele.name.$t } || { ele.sex.$t }</h2>
-
-            <Image src={ele.media.photos.photo[2].$t} rounded responsive />
-            <p responsive >{this.truncateString(ele.description.$t, 200)}</p>
-        </Link>
-      </Col>
-        ))
-      }
-    </Row>
-      </div>
-    </Grid> */}
     </div>
     );
   }
 }
-
-// export default App;

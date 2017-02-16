@@ -4,18 +4,21 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 
 class Search extends Component {
   render() {
-    const { list, oneDog, handleSubmit, singleDogDisplay, onSearchTermChange, truncateString, fetchDogs } = this.props;
+    const { list, oneDog, descriptionDog, handleSubmit, singleDogDisplay, onSearchTermChange, truncateString, fetchDogs } = this.props;
     return (
       <div>
         <Grid className>
-          <Row>
-            <Col>
-        <form onSubmit={handleSubmit}>
-        <input type="text" onChange={onSearchTermChange}/>
-        <input type="submit" value="Search" />
-        </form>
-        </Col>
-        </Row>
+          <Row className="show-grid">
+                <Col xs={6} md={4}></Col>
+                <Col xs={6} md={4}>
+                    <h3>Search for Dogs by zipcode:</h3>
+                  <form onSubmit={handleSubmit}>
+                <input type="text" onChange={onSearchTermChange}/>
+                <div><p></p></div>
+                <input type="submit" value="Fetch!" />
+                </form></Col>
+                <Col xsHidden md={4}></Col>
+              </Row>
         <div>
         <Row >
         {
