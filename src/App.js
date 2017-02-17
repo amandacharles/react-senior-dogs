@@ -28,30 +28,47 @@ class Main extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.cloneElement = this.cloneElement.bind(this);
     this.singleDogDisplay = this.singleDogDisplay.bind(this);
-    this.pics = this.pics.bind(this);
     this.addToFavorites = this.addToFavorites.bind(this);
     this.deleteFromFavorites = this.deleteFromFavorites.bind(this);
+    this.fetchFavorites = this.fetchFavorites.bind(this);
   }
 
-onSearchTermChange(event){
+  onSearchTermChange(event){
       this.setState({ searchTerm: event.target.value})
     }
 
-handleSubmit(event){
+  handleSubmit(event){
   event.preventDefault()
 
   this.fetchDogs()
 }
 
-fetchDogs(){
-
+  fetchDogs(){
   axios.get('https://cors-anywhere.herokuapp.com/http://api.petfinder.com/pet.find?key=2d2685ee8c7cbfa08366ece6e45d8ddd&location='+this.state.searchTerm+'&age=senior&animal=dog&output=full&format=json')
   .then(({ data }) => {
     this.setState({
-       list:data.petfinder.pets.pet
+       list: data.petfinder.pets.pet
     })
   })
 }
+
+  fetchFavorites(){
+    axios.get('/api/favorites')
+    .then(({ data }) => {
+      this.setState({
+         favorites : data
+      })
+    })
+  }
+
+  addToFavorites(){
+
+  }
+
+  deleteFromFavorites(){
+
+  }
+
 
   truncateString(str, num) {
     if (num > str.length) {
@@ -79,30 +96,30 @@ fetchDogs(){
         truncateString: this.truncateString,
         singleDogDisplay: this.singleDogDisplay,
         addToFavorites: this.addToFavorites,
-        deleteFromFavorites: this.deleteFromFavorites
+        deleteFromFavorites: this.deleteFromFavorites,
+        fetchFavorites: this.fetchFavorites
       })
     }
   }
 
   singleDogDisplay(id, name, sex, photos, description){
     let photoArray = [];
+    let gender = '';
+
+    if (sex == 'M') {
+      gender = 'Male'
+    } else {
+      gender = 'Female'
+    }
 
     for (const element of photos) {
       if (element["@size"] === 'x') {
         photoArray.push(element["$t"])
       }
     }
-    this.state.oneDog.push(id, name, sex, photoArray, description)
-    this.state.descriptionDog.push(id, name, sex, ...photoArray, description)
+    this.state.oneDog.push(id, name, gender, photoArray, description)
+    this.state.descriptionDog.push(id, name, gender, ...photoArray, description)
   }
-
-addToFavorites(id){
-
-}
-
-deleteFromFavorites(id){
-
-}
 
   render() {
     return <div>
@@ -115,11 +132,11 @@ deleteFromFavorites(id){
     <Nav>
       <NavItem eventKey={1} href="#"><Link className="navi" to="favorites">favorite dogs</Link></NavItem>
       <NavItem eventKey={2} href="#"><Link className="navi" to="search">search</Link></NavItem>
-
     </Nav>
   </Navbar>
 
       {this.cloneElement()}
+
     </div>
   }
 }
@@ -136,7 +153,6 @@ export default class App extends Component {
           <Route path='search' component={Search}/>
           <Route path='dog' component={Dog} />
           <Route path='description' component={Description} />
-
         </Route>
         <Route path='*' component={NotFound} />
       </Router>

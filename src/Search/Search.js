@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { Button, Grid, Row, Col, Image, Carousel } from 'react-bootstrap';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
+import Description from '../Description/Description';
 
 class Search extends Component {
-  render() {
-    const { list, oneDog, descriptionDog, handleSubmit, singleDogDisplay, onSearchTermChange, truncateString, fetchDogs } = this.props;
+  render(props) {
+    const {
+      list,
+      oneDog,
+      descriptionDog,
+      handleSubmit,
+      singleDogDisplay,
+      onSearchTermChange,
+      truncateString,
+      fetchDogs } = this.props;
+
     return (
       <div>
         <Grid className>
@@ -33,7 +43,7 @@ class Search extends Component {
                 ele.media.photos.photo,
                 ele.description.$t)
               }>
-            <h2>{ ele.name.$t } || { ele.sex.$t }</h2>
+            <h2>{ ele.name.$t }</h2>
 
             <Image  src={ele.media.photos.photo[2].$t} rounded responsive />
             <p responsive >{truncateString(ele.description.$t, 200)}</p>
@@ -44,7 +54,6 @@ class Search extends Component {
         </Row>
         </div>
         </Grid>
-
       </div>
     );
   }

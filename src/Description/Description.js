@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Grid, Row, Col, Image, Carousel } from 'react-bootstrap';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
+import Dog from '../Dog/Dog';
+import Favorites from '../Favorites/Favorites';
+import Search from '../Search/Search';
 
 class Description extends Component {
   render() {
@@ -16,8 +19,8 @@ const { list,
         children
        } = this.props;
 
-       console.log(oneDog);
        console.log(descriptionDog);
+       console.log(oneDog);
       return (
       <div>
         {
