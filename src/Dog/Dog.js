@@ -56,7 +56,7 @@ const { list,
             </Row>
             <Row>
               <Col>
-                <Button onClick={this.handleClick} bsSize="large" bsStyle="warning"><Link className="navi" to="favorites">Add to Favorites</Link></Button>
+                <Button onClick={ this.handleClick } bsSize="large" bsStyle="warning"><Link className="navi" to="favorites">Add to Favorites</Link></Button>
               </Col>
             </Row>
           </Grid>

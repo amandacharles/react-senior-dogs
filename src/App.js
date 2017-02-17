@@ -62,8 +62,21 @@ class Main extends Component {
   }
 
   addToFavorites(){
-
+    axios.post('/api/favorites', {
+      name
+    })
   }
+
+  // function createPost() {
+  //     $http.post('/api/posts', vm.post)
+  //       .then(response => {
+  //         response.data.comments = []
+  //         vm.posts.push(response.data)
+  //         vm.togglePostForm()
+  //         delete vm.post
+  //       })
+  //   }
+
 
   deleteFromFavorites(){
 

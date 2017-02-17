@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Grid, Row, Col, Image, Carousel } from 'react-bootstrap';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 import Description from '../Description/Description';
+import Dog from '../Dog/Dog'
 
 class Search extends Component {
   render(props) {

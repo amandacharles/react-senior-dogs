@@ -6,6 +6,11 @@ import Description from '../Description/Description'
 import Dog from '../Dog/Dog'
 
 class Favorites extends Component {
+  constructor(props){
+    super(props)
+  }
+
+
   render() {
     const { list,
             oneDog,
@@ -22,9 +27,21 @@ class Favorites extends Component {
            console.log(favorites);
     return (
       <div>
-        Favorite favorites favorites
-        {
-        }
+        <Grid>
+        <Row >
+          {
+          favorites.map(ele => (
+            <Col key={ele.id} s={12} md={4} l={3}>
+              <h2>{ ele.name }</h2>
+
+              <Image src={ele.img} rounded responsive />
+              <p responsive >{truncateString(ele.description, 200)}</p>
+          </Col>
+          ))
+          }
+
+        </Row>
+      </Grid>
       </div>
     );
   }
